@@ -3,6 +3,9 @@ package hello.core.lifecycle;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 public class NetworkClient{
     private String url;
 
@@ -28,12 +31,14 @@ public class NetworkClient{
         System.out.println("close : " + url);
     }
 
+    @PostConstruct
     public void init() throws Exception {
         System.out.println("bean init");
         connect();
         call("초기화 연결 메세지");
     }
 
+    @PreDestroy
     //Bean method의 destroyMethod는 추론기능 (close, shutdown)이 있어서 따로 적어주지 않아도 동작함
     public void close() throws Exception {
         System.out.println("bean close");
